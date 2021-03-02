@@ -1,0 +1,82 @@
+# Fail2Ban configuration file
+#
+# Author: Yaroslav O. Halchenko <debian@onerussian.com>
+#
+# $Revision$
+#
+
+[INCLUDES]
+
+# Read common prefixes. If any customizations available -- read them from
+# common.local
+before = apache-common.conf
+
+[Definition]
+
+datepattern = %%d/%%b/%%Y:%%H:%%M:%%S -0500
+
+badbotscustom = \/jenkins|\/config|\/remote|\/sdk|\/_async|\/owa|\/chkisg|\/thinkphp|\/0bef
+
+badbots = \/wp-login\.php|\/\?XDEBUG_SESSION_START|\/console\/|\/wp-content\/|\/Autodiscover\/|\/mifs\/|\/HNAP1\/|\/evox\/|\/PMA|\/pma|\/actuator|\/nmap|.*<php>|\/solr|Gh0st|\/ReportServer|\/xmlrpc.php|\/boaform|.*wp-includes|\/vendor\/phpunit|\/manager\/html|\/dns-query|http:\/\/|\/\.|\\x\d{2}|.*NetSystemResearch|\/level\/15|\/cgi-bin|\/shell|\/phpinfo\.php|\/cgi-bin|\/cmd.php|\/MyAdmin|\/myadmin|\/hudson
+
+
+#failregex = ^<HOST> -.*"(GET|POST|HEAD) (?:%(badbots)s|%(badbotscustom)s)".*$
+failregex = ^<HOST> -.*"(GET|POST|HEAD) [badbots]".*$
+            ^<HOST> -.*"\\n".*$
+
+# Option:  failregex
+# Notes.:  regex to match failures to find a home directory on a server, which
+#          became popular last days. Most often attacker just uses IP instead of
+#          domain name -- so expect to see them in generic error.log if you have
+#          per-domain log files.
+# Values:  TEXT
+##
+#failregex = ^<HOST> -.*"(GET|POST|HEAD) \/wp-login\.php .*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/\?XDEBUG_SESSION_START.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/console\/ .*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/wp-content\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/Autodiscover\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/mifs\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/HNAP1\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/evox\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/PMA.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/pma.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/actuator.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/nmap.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) .*<php>.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/solr.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) Gh0st.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/ReportServer.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/xmlrpc.php.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/boaform.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) .*wp-includes.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/vendor\/phpunit.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/manager\/html.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/dns-query.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) http:\/\/.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/\..*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \\x\d{2}.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) .*NetSystemResearch.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/level\/15.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/cgi-bin.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/actuator.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/shell.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/jenkins.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/config.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/remote.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/sdk.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/_async.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/owa.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/chkisg.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/thinkphp.*$
+#            ^<HOST> -.*"(GET|POST|HEAD) \/0bef.*$
+#            ^<HOST> -.*"\\n".*$
+#
+
+           
+
+# Option:  ignoreregex
+# Notes.:  regex to ignore. If this regex matches, the line is ignored.
+# Values:  TEXT
+#
+ignoreregex = 
